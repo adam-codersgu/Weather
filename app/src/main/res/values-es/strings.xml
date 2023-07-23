@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Weather</string>
+    <string name="app_name">Clima</string>
     <string name="change_city">Cambiar la ciudad</string>
     <string name="refresh">Actualizar</string>
     <string name="data_not_found">Lo sentimos, no se encontraron datos meteorológicos.</string>
