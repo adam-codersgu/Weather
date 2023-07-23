@@ -11,6 +11,6 @@
     <string name="temperature_field" translatable="false">%1$.2f ℃</string>
     <string name="updated_field">Last update: %1$s</string>
     <string name="use_current_location">Use my current location</string>
-    <string name="weather_icon">Image of current weather</string>
+    <string name="weather_icon">Image of the current weather</string>
     <string name="permission_required">Permission required to retrieve the weather for your location.</string>
 </resources>
