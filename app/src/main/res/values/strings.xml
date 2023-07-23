@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Weather</string>
+    <string name="change_city">Change city</string>
+    <string name="refresh">Refresh</string>
+    <string name="data_not_found">Sorry, no weather data found.</string>
+    <string name="city_field">%1$s, %2$s</string>
+    <string name="go">Go</string>
+    <string name="details_field">%1$s
+       \nHumidity: %2$s
+       \nPressure: %3$s hPa</string>
+    <string name="temperature_field">%1$.2f ℃</string>
+    <string name="updated_field">Last update: %1$s</string>
+    <string name="use_current_location">Use my current location</string>
+    <string name="weather_icon">Image of current weather</string>
+    <string name="permission_required">Permission required to retrieve the weather for your location.</string>
 </resources>
