@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.codersguidebook.weather"
-        minSdk 33
+        minSdk 31
         targetSdk 33
         versionCode 1
         versionName "1.0"
