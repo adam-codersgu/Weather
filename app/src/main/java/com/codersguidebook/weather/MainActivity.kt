@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.codersguidebook.weather.databinding.ActivityMainBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -18,6 +20,8 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
+import java.text.DateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -108,5 +112,38 @@ class MainActivity : AppCompatActivity() {
         } catch (_: Throwable) {
             return null
         }
+    }
+
+    private fun renderWeather(json: JSONObject) {
+        try {
+            val city = json.getString("name").uppercase(Locale.US)
+            val country = json.getJSONObject("sys").getString("country")
+            binding.txtCity.text = resources.getString(R.string.city_field, city, country)
+
+            val weatherDetails = json.optJSONArray("weather")?.getJSONObject(0)
+            val main = json.getJSONObject("main")
+            val description = weatherDetails?.getString("description")
+            val humidity = main.getString("humidity")
+            val pressure = main.getString("pressure")
+            binding.txtDetails.text = resources.getString(R.string.details_field, description, humidity, pressure)
+
+            // The backup icon is 03d (cloudy) for null results
+            // Full list of icons available here https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2
+            val iconID = weatherDetails?.getString("icon") ?: "03d"
+            val url = "https://openweathermap.org/img/wn/$iconID@2x.png"
+
+            Glide.with(this)
+                .load(url)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .centerCrop()
+                .into(binding.imgWeatherIcon)
+
+            val temperature = main.getDouble("temp")
+            binding.txtTemperature.text = resources.getString(R.string.temperature_field, temperature)
+
+            val df = DateFormat.getDateTimeInstance()
+            val lastUpdated = df.format(Date(json.getLong("dt") * 1000))
+            binding.txtUpdated.text = resources.getString(R.string.updated_field, lastUpdated)
+        } catch (_: Exception) { }
     }
 }

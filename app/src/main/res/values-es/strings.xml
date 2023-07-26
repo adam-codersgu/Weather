@@ -8,7 +8,7 @@
     <string name="details_field">%1$s
        \nHumedad: %2$s
        \nPresión: %3$s hPa</string>
-    <string name="updated_field">Última actualización:</string>
+    <string name="updated_field">Última actualización: %1$s</string>
     <string name="use_current_location">Usar mi ubicación actual</string>
     <string name="weather_icon">Imagen del tiempo actual</string>
     <string name="permission_required">Se requiere permiso para recuperar el clima de su ubicación.</string>
