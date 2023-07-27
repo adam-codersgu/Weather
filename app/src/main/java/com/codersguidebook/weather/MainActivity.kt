@@ -4,8 +4,12 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.provider.UserDictionary.Words.APP_ID
+import android.text.InputType
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -50,6 +54,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            // TODO: Respond to the refresh menu item here
+
+            R.id.change_city -> showInputDialog()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) getLocation()
@@ -91,7 +109,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getJSON(url: String): JSONObject? {
         try {
-            val con = URL("$url&appid=$APP_ID&units=metric").openConnection() as HttpURLConnection
+            val con = URL("$url&appid=$API_KEY&units=metric").openConnection() as HttpURLConnection
             con.apply {
                 doOutput = true
                 connect()
@@ -145,5 +163,24 @@ class MainActivity : AppCompatActivity() {
             val lastUpdated = df.format(Date(json.getLong("dt") * 1000))
             binding.txtUpdated.text = resources.getString(R.string.updated_field, lastUpdated)
         } catch (_: Exception) { }
+    }
+
+    private fun showInputDialog() {
+        val input = EditText(this@MainActivity)
+        input.inputType = InputType.TYPE_CLASS_TEXT
+
+        AlertDialog.Builder(this).apply {
+            setTitle(getString(R.string.change_city))
+            setView(input)
+            setPositiveButton(getString(R.string.go)) { _, _ ->
+                val city = input.text.toString()
+                updateWeatherData("$CITY_NAME_URL$city")
+                sharedPreferences.edit().apply {
+                    putString("location", city)
+                    apply()
+                }
+            }
+            show()
+        }
     }
 }
