@@ -52,6 +52,17 @@ class MainActivity : AppCompatActivity() {
         binding.fab.setOnClickListener {
             getLocation()
         }
+
+        binding.root.setOnRefreshListener {
+            refreshData()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        binding.root.isRefreshing = true
+        refreshData()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -61,9 +72,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            // TODO: Respond to the refresh menu item here
-
+            R.id.refresh -> {
+                binding.root.isRefreshing = true
+                refreshData()
+            }
             R.id.change_city -> showInputDialog()
+            // TODO: Handle changes in language here
         }
         return super.onOptionsItemSelected(item)
     }
@@ -182,5 +196,13 @@ class MainActivity : AppCompatActivity() {
             }
             show()
         }
+    }
+
+    private fun refreshData() {
+        when (val location = sharedPreferences.getString("location", null)) {
+            null, "currentLocation" -> getLocation()
+            else -> updateWeatherData("$CITY_NAME_URL$location")
+        }
+        binding.root.isRefreshing = false
     }
 }
