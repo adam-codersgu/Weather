@@ -13,4 +13,7 @@
     <string name="use_current_location">Use my current location</string>
     <string name="weather_icon">Image of the current weather</string>
     <string name="permission_required">Permission required to retrieve the weather for your location.</string>
+    <string name="language">Language</string>
+    <string name="english" translatable="false">English</string>
+    <string name="spanish" translatable="false">Español</string>
 </resources>

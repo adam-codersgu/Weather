@@ -11,8 +11,10 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.os.LocaleListCompat
 import androidx.preference.PreferenceManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -72,9 +74,9 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.refresh -> refreshData()
-
             R.id.change_city -> showInputDialog()
-            // TODO: Handle changes in language here
+            R.id.language_en -> changeLanguage("en")
+            R.id.language_es -> changeLanguage("es")
         }
         return super.onOptionsItemSelected(item)
     }
@@ -202,5 +204,10 @@ class MainActivity : AppCompatActivity() {
             else -> updateWeatherData("$CITY_NAME_URL$location")
         }
         binding.root.isRefreshing = false
+    }
+
+    private fun changeLanguage(isoCode: String) {
+        val appLocale = LocaleListCompat.forLanguageTags(isoCode)
+        AppCompatDelegate.setApplicationLocales(appLocale)
     }
 }

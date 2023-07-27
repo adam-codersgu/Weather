@@ -10,4 +10,13 @@
         android:id="@+id/change_city"
         android:title="@string/change_city"
         app:showAsAction="never"/>
+
+    <item android:title="@string/language">
+        <menu>
+            <item android:id="@+id/language_en"
+                android:title="@string/english" />
+            <item android:id="@+id/language_es"
+                android:title="@string/spanish" />
+        </menu>
+    </item>
 </menu>

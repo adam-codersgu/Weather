@@ -12,4 +12,5 @@
     <string name="use_current_location">Usar mi ubicación actual</string>
     <string name="weather_icon">Imagen del tiempo actual</string>
     <string name="permission_required">Se requiere permiso para recuperar el clima de su ubicación.</string>
+    <string name="language">Idioma</string>
 </resources>
