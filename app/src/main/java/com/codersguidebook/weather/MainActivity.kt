@@ -61,7 +61,6 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        binding.root.isRefreshing = true
         refreshData()
     }
 
@@ -72,10 +71,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.refresh -> {
-                binding.root.isRefreshing = true
-                refreshData()
-            }
+            R.id.refresh -> refreshData()
+
             R.id.change_city -> showInputDialog()
             // TODO: Handle changes in language here
         }
@@ -199,6 +196,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun refreshData() {
+        binding.root.isRefreshing = true
         when (val location = sharedPreferences.getString("location", null)) {
             null, "currentLocation" -> getLocation()
             else -> updateWeatherData("$CITY_NAME_URL$location")
